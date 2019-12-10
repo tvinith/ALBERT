@@ -28,6 +28,7 @@ import tensorflow as tf
 from tensorflow.contrib import data as contrib_data
 from tensorflow.contrib import metrics as contrib_metrics
 from tensorflow.contrib import tpu as contrib_tpu
+import codecs
 
 
 class InputExample(object):
@@ -112,7 +113,8 @@ class DataProcessor(object):
   def _read_tsv(cls, input_file, quotechar=None):
     """Reads a tab separated value file."""
     with tf.gfile.Open(input_file, "r") as f:
-      reader = csv.reader(f, delimiter="\t", quotechar=quotechar)
+      reader = csv.reader((line.replace('\0','') for line in f), delimiter="\t", quotechar=quotechar)
+      # reader = csv.reader(codecs.open('file.csv', 'rU', 'utf-16'),delimiter="\t", quotechar=quotechar)
       lines = []
       for line in reader:
         lines.append(line)

@@ -260,7 +260,7 @@ class ColaProcessor(DataProcessor):
         text_a = self.process_text(line[1])
         label = "0"
       else:
-        text_a = self.process_text(line[3])
+        text_a = self.process_text(line[2])
         label = self.process_text(line[1])
       examples.append(
           InputExample(guid=guid, text_a=text_a, text_b=None, label=label))
